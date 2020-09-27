@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, render
 from django.utils.decorators import method_decorator
 from django.views.generic import DetailView, ListView, TemplateView, FormView
 
-from .forms import QuestionForm, EssayForm
+from .forms import QuestionForm, EssayForm, AddQuizForm
 from .models import Quiz, Category, Progress, Sitting, Question
 from essay.models import Essay_Question
 
@@ -383,3 +383,21 @@ def anon_session_score(session, to_add=0, possible=0):
         session["session_score_possible"] += possible
 
     return session["session_score"], session["session_score_possible"]
+
+
+@login_required
+def AddQuizView(request):
+    if request.method == 'POST':
+        
+        q_form =AddQuizForm(request.POST)
+        if q_form.is_valid():
+            q_form.save()
+            messages.success(request, f'True False added successfully.')
+            return redirect("home")
+                
+    else:
+        q_form =AddQuizForm()
+    context = {
+        'q_form': q_form,
+    }
+    return render(request, 'add.html', context)

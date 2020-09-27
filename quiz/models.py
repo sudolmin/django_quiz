@@ -200,6 +200,9 @@ class Progress(models.Model):
         verbose_name = _("User Progress")
         verbose_name_plural = _("User progress records")
 
+    def __str__(self):
+        return f'{self.user} Progress report'
+
     @property
     def list_all_cat_scores(self):
         """

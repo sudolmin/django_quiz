@@ -1,14 +1,23 @@
-from django.urls import path
+from django.urls import path, include
 
 from .views import QuizListView, CategoriesListView, \
     ViewQuizListByCategory, QuizUserProgressView, QuizMarkingList, \
-    QuizMarkingDetail, QuizDetailView, QuizTake
+    QuizMarkingDetail, QuizDetailView, QuizTake, AddQuizView
+
+from multichoice import views as mcq_views
+from true_false import views as tfq_views
+from essay import views as esq_views
 
 urlpatterns = [
 
     path('',
         view=QuizListView.as_view(),
         name='quiz_index'),
+
+    path('add/mcq', mcq_views.mcq, name="mcq"),
+    path('add/esq', esq_views.essay, name="esq"),
+    path('add/tfq', tfq_views.tfq, name="tfq"),
+    path('add/quiz', AddQuizView, name="add_quiz"),
 
     path('category/',
         view=CategoriesListView.as_view(),
